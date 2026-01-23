@@ -1,7 +1,20 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
+.app-header-div{
+  background-color: rgba(0, 132, 255, 0.822);
+  padding: 20px 15px;
+  width: 100%;
+  color: black;
+  border-radius: 25px;
+ }
+
+ .app-header-div .title{
+  font-size: 48px;
+ }
+
+ .app-header-div .creator{
+  font-size: 24px;
+ }
