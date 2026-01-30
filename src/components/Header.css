@@ -1,0 +1,25 @@
+.app-header{
+  background-color: rgba(0, 132, 255, 0.822);
+  padding: 20px 15px;
+  width: 100%;
+  color: black;
+  border-radius: 15px;
+ }
+
+ .app-header .title{
+  font-size: 48px;
+ }
+
+ .app-header .creator{
+  font-size: 24px;
+ }
+
+.app-menu{
+  height:35px;
+  background-color: #eeea05;
+  width: 100%;
+  border-color: #bbb;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 15px;
+}
