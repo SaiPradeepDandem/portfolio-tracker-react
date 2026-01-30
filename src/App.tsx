@@ -5,7 +5,7 @@ import PortfolioList from './components/portfolio/PortfolioList'
 import { type Position } from './types/Position'
 
 function App() {
-  const [positions, setPositions] = useState<Position[]>([
+  const [positions] = useState<Position[]>([
     {
       id: 1,
       ticker: "WDS",
