@@ -1,1 +1,38 @@
 
+.portfolio-table {
+  font-size: 15px;
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif; 
+}
+
+.portfolio-table th, .portfolio-table td {
+  padding: 12px; 
+  text-align: left; 
+  border-bottom: 1px solid #ddd; 
+}
+
+.portfolio-table th {
+  border-bottom: 1px solid #868585; 
+}
+
+.portfolio-table thead th {
+  background-color: #bfe7f3; 
+  color: rgb(53, 48, 48);
+}
+
+.portfolio-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.portfolio-table tbody tr:hover {
+  background-color: #ddd;
+}
+
+.portfolio-table td.profit {
+  color: rgba(50, 124, 0, 0.842);
+}
+
+.portfolio-table td.loss {
+  color: rgba(248, 0, 0, 0.842);
+}

@@ -5,7 +5,7 @@ import { useState } from 'react'
 const PortfolioItem = ({ position }: { position: Position }) => {
     console.log("Item : ", position)
     const [total] = useState((position.currentPrice - position.buyPrice) * position.quantity)
-    const totalStyle = total<0? 'loss' : 'profit';
+    const totalStyle = total < 0 ? 'loss' : 'profit';
     return (<tr>
         <td >{position.ticker}</td>
         <td >{position.quantity}</td>
