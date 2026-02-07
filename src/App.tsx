@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type ChangeEvent, type FormEvent } from 'react'
 import './App.css'
 import Header from './components/Header'
 import PortfolioList from './components/portfolio/PortfolioList'
@@ -45,10 +45,27 @@ function App() {
   ]);
   console.log("Positions : ", positions)
 
+  const addPosition = (event:FormEvent) =>{
+    console.log("Event :: ", event);
+    event.preventDefault()
+    
+  }
+
+  const inputChange = (event: ChangeEvent<HTMLInputElement>) =>{
+    console.log("Change Event :: ", event.target.value);
+    
+  }
+
   return (
     <div className="app-root">
       <Header />
       <div className="app-content">
+        <div>
+          <form onSubmit={addPosition}>
+            <input onChange={inputChange} />
+            <button type="submit">Add Note</button>
+          </form>
+        </div>
         <PortfolioList rows={positions} />
       </div>
     </div>
