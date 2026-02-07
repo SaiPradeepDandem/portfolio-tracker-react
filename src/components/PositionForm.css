@@ -1,0 +1,36 @@
+.form-grid-container {
+    font-size: 16px;
+    display: grid;
+    grid-template-columns: 150px 220px 150px 220px;
+    /* Adds space (gaps) between grid cells */
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-grid-container label {
+    align-self: center;
+    font-weight: 600;
+}
+
+.form-grid-container input {
+    width: 150px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-grid-container button {
+    width: 200px;
+    grid-column: 1 / span 4;
+    background-color: #038656;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    margin: auto;
+}
+
+.form-grid-container button:hover {
+    background-color:#049c64;
+}

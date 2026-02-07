@@ -16,6 +16,7 @@
 
 .app-menu{
   height:35px;
+  min-height:35px;
   background-color: #eeea05;
   width: 100%;
   border-color: #bbb;
