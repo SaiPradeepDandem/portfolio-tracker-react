@@ -2,8 +2,12 @@ import './PortfolioList.css'
 import { type Position } from '../../types/Position'
 import PortfolioItem from './PortfolioItem'
 
-const PortfolioList = ({ rows }: { rows: Position[] }) => {
-console.log("Rows ", rows)
+const PortfolioList = (props: {
+    rows: Position[],
+    removePosition: (positionId: string) => void
+}) => {
+    const rows = props.rows
+    console.log("Rows ", rows)
     return (<table className='portfolio-table'>
         <thead>
             <tr>
@@ -14,10 +18,11 @@ console.log("Rows ", rows)
                 <th>Profit/Loss</th>
                 <th>Exchange</th>
                 <th>Currency</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-        {rows.map(row => <PortfolioItem key={row.id} position={row} />)}
+            {rows.map(row => <PortfolioItem key={row.id} position={row} removePosition={props.removePosition} />)}
         </tbody>
     </table>)
 }

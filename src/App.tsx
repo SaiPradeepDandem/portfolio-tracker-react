@@ -54,12 +54,18 @@ function App() {
     setPositions(newPositions)
   }  
 
+  const removePosition = (positionId:string) =>{
+    console.log("Remove position id : ", positionId)
+    const newPositions = positions.filter(p => p.id != positionId);
+    setPositions(newPositions)
+  }
+
   return (
     <div className="app-root">
       <Header />
       <div className="app-content">
         <PositionForm addPosition={addPosition}/>
-        <PortfolioList rows={positions} />
+        <PortfolioList rows={positions} removePosition={removePosition}/>
       </div>
     </div>
   )
