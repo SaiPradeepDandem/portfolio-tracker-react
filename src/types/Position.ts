@@ -1,5 +1,5 @@
 export interface Position {
-  id: number;
+  id: string;
   ticker: string;
   quantity: number;
   buyPrice: number;

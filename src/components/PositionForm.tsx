@@ -2,8 +2,7 @@ import './PositionForm.css'
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { type Position } from './../types/Position'
 
-const PositionForm = () => {
-
+const PositionForm = (props: { addPosition: (position: Position) => void }) => {
     const [ticker, setTicker] = useState('')
     const [quantity, setQuantity] = useState('')
     const [buyPrice, setBuyPrice] = useState('')
@@ -11,13 +10,12 @@ const PositionForm = () => {
     const [exchange, setExchange] = useState('')
     const [currency, setCurrency] = useState('')
 
-
-    const addPosition = (event: FormEvent) => {
+    const onAddPosition = (event: FormEvent) => {
         event.preventDefault()
         // TODO: Add validations
 
         const position: Position = {
-            id: 0,
+            id: '',
             ticker,
             quantity: Number(quantity),
             buyPrice: Number(buyPrice),
@@ -25,15 +23,17 @@ const PositionForm = () => {
             exchange,
             currency,
         };
-         console.log("Add Position1  : ", position)
+        console.log("New Position  : ", position)
 
-         /* Reset the form. */
-         setTicker('')
-         setQuantity('')
-         setBuyPrice('')
-         setCurrentPrice('')
-         setExchange('')
-         setCurrency('')
+        /* Reset the form. */
+        setTicker('')
+        setQuantity('')
+        setBuyPrice('')
+        setCurrentPrice('')
+        setExchange('')
+        setCurrency('')
+        
+        props.addPosition(position)
     }
 
     const inputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +54,7 @@ const PositionForm = () => {
         }
     }
 
-    return <form className="form-grid-container" onSubmit={addPosition}>
+    return <form className="form-grid-container" onSubmit={onAddPosition}>
         <label>Ticker:</label>
         <input type="text" id="ticker" name="ticker" onChange={inputChange} value={ticker}></input>
 

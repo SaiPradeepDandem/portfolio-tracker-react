@@ -1,4 +1,5 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react'
+import { nanoid } from "nanoid"
 import './App.css'
 import Header from './components/Header'
 import PortfolioList from './components/portfolio/PortfolioList'
@@ -6,9 +7,9 @@ import PositionForm from './components/PositionForm'
 import { type Position } from './types/Position'
 
 function App() {
-  const [positions] = useState<Position[]>([
+  const [positions, setPositions] = useState<Position[]>([
     {
-      id: 1,
+      id: nanoid(7),
       ticker: "WDS",
       quantity: 20,
       buyPrice: 26.01,
@@ -17,7 +18,7 @@ function App() {
       currency: "AUD",
     },
     {
-      id: 2,
+      id: nanoid(7),
       ticker: "TLS",
       quantity: 200,
       buyPrice: 1.04,
@@ -26,7 +27,7 @@ function App() {
       currency: "AUD",
     },
     {
-      id: 3,
+      id: nanoid(7) ,
       ticker: "VGA",
       quantity: 10,
       buyPrice: 226.55,
@@ -35,7 +36,7 @@ function App() {
       currency: "AUD",
     },
     {
-      id: 4,
+      id: nanoid(7),
       ticker: "NVO",
       quantity: 44,
       buyPrice: 85.01,
@@ -44,15 +45,20 @@ function App() {
       currency: "USD",
     }
   ]);
-  console.log("Positions : ", positions)
+  console.log("Initial Positions : ", positions)
 
-  
+  const addPosition = (position:Position) => {
+    position.id = nanoid(7)
+    var newPositions = positions.concat(position)
+    console.log("New Positions : ", position)
+    setPositions(newPositions)
+  }  
 
   return (
     <div className="app-root">
       <Header />
       <div className="app-content">
-        <PositionForm />
+        <PositionForm addPosition={addPosition}/>
         <PortfolioList rows={positions} />
       </div>
     </div>
