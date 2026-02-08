@@ -1,15 +1,16 @@
-import { useState, type ChangeEvent, type FormEvent } from 'react'
-import { nanoid } from "nanoid"
+import { useEffect, useState } from 'react'
 import './App.css'
 import Header from './components/Header'
 import PortfolioList from './components/portfolio/PortfolioList'
 import PositionForm from './components/PositionForm'
 import { type Position } from './types/Position'
 
+let id_incr = 5;
+
 function App() {
   const [positions, setPositions] = useState<Position[]>([
     {
-      id: nanoid(7),
+      id: 1,
       ticker: "WDS",
       quantity: 20,
       buyPrice: 26.01,
@@ -18,7 +19,7 @@ function App() {
       currency: "AUD",
     },
     {
-      id: nanoid(7),
+      id: 2,
       ticker: "TLS",
       quantity: 200,
       buyPrice: 1.04,
@@ -27,7 +28,7 @@ function App() {
       currency: "AUD",
     },
     {
-      id: nanoid(7) ,
+      id: 3,
       ticker: "VGA",
       quantity: 10,
       buyPrice: 226.55,
@@ -36,7 +37,7 @@ function App() {
       currency: "AUD",
     },
     {
-      id: nanoid(7),
+      id: 4,
       ticker: "NVO",
       quantity: 44,
       buyPrice: 85.01,
@@ -47,25 +48,41 @@ function App() {
   ]);
   console.log("Initial Positions : ", positions)
 
-  const addPosition = (position:Position) => {
-    position.id = nanoid(7)
-    var newPositions = positions.concat(position)
+  const addPosition = (position: Position) => {
+    position.id = id_incr++
+    let newPositions = positions.concat(position)
     console.log("New Positions : ", position)
     setPositions(newPositions)
-  }  
+  }
 
-  const removePosition = (positionId:string) =>{
+  const removePosition = (positionId: number) => {
     console.log("Remove position id : ", positionId)
     const newPositions = positions.filter(p => p.id != positionId);
     setPositions(newPositions)
   }
 
+  const [totalCurrentValue, setTotalCurrentValue] = useState(0)
+  const [totalProfitLoss, setTotalProfitLoss] = useState(0)
+  const totalStyle = totalProfitLoss < 0 ? 'loss' : 'profit';
+
+  useEffect(() => {
+    const totalCV = positions.reduce((acc, p) => acc + p.currentPrice, 0)
+    setTotalCurrentValue(totalCV)
+
+    const totalPL = positions.reduce((acc, p) => acc + ((p.currentPrice - p.buyPrice) * p.quantity), 0)
+    setTotalProfitLoss(totalPL)
+  }, [positions])
+
   return (
     <div className="app-root">
       <Header />
       <div className="app-content">
-        <PositionForm addPosition={addPosition}/>
-        <PortfolioList rows={positions} removePosition={removePosition}/>
+        <PositionForm addPosition={addPosition} />
+        <PortfolioList rows={positions} removePosition={removePosition} />
+        <div className='totals-container'>
+          <label>Total Current Value: </label><label>${totalCurrentValue.toFixed(2)}</label><br />
+          <label>Total profit/loss: </label><label className={totalStyle}>${totalProfitLoss.toFixed(2)}</label>
+        </div>
       </div>
     </div>
   )

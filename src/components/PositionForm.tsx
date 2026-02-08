@@ -2,76 +2,71 @@ import './PositionForm.css'
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { type Position } from './../types/Position'
 
-const PositionForm = (props: { addPosition: (position: Position) => void }) => {
-    const [ticker, setTicker] = useState('')
-    const [quantity, setQuantity] = useState('')
-    const [buyPrice, setBuyPrice] = useState('')
-    const [currentPrice, setCurrentPrice] = useState('')
-    const [exchange, setExchange] = useState('')
-    const [currency, setCurrency] = useState('')
+const PositionForm = (props: {
+    addPosition: (position: Position) => void
+}) => {
+    const [form, setForm] = useState({
+        ticker: '',
+        quantity: '',
+        buyPrice: '',
+        currentPrice: '',
+        exchange: '',
+        currency: '',
+    })
 
     const onAddPosition = (event: FormEvent) => {
         event.preventDefault()
         // TODO: Add validations
 
         const position: Position = {
-            id: '',
-            ticker,
-            quantity: Number(quantity),
-            buyPrice: Number(buyPrice),
-            currentPrice: Number(currentPrice),
-            exchange,
-            currency,
+            id: 0,
+            ticker: form.ticker,
+            quantity: Number(form.quantity),
+            buyPrice: Number(form.buyPrice),
+            currentPrice: Number(form.currentPrice),
+            exchange: form.exchange,
+            currency: form.currency
         };
         console.log("New Position  : ", position)
 
         /* Reset the form. */
-        setTicker('')
-        setQuantity('')
-        setBuyPrice('')
-        setCurrentPrice('')
-        setExchange('')
-        setCurrency('')
-        
+        setForm({
+            ticker: '',
+            quantity: '',
+            buyPrice: '',
+            currentPrice: '',
+            exchange: '',
+            currency: '',
+        })
+
         props.addPosition(position)
     }
 
     const inputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        let value = event.target.value
-        let id = event.target.id;
-        if (id == 'ticker') {
-            setTicker(value)
-        } else if (id == 'quantity') {
-            setQuantity(value)
-        } else if (id == 'buyPrice') {
-            setBuyPrice(value)
-        } else if (id == 'currentPrice') {
-            setCurrentPrice(value)
-        } else if (id == 'exchange') {
-            setExchange(value)
-        } else {
-            setCurrency(value)
-        }
+        /* Extracting the attributes directly. */
+        let {id, value} = event.target
+        setForm(prev => ({ ...prev, [id]: value }))
+        console.log("Form : ", form)
     }
 
     return <form className="form-grid-container" onSubmit={onAddPosition}>
         <label>Ticker:</label>
-        <input type="text" id="ticker" name="ticker" onChange={inputChange} value={ticker}></input>
+        <input type="text" id="ticker" name="ticker" onChange={inputChange} value={form.ticker}></input>
 
         <label>Quantity:</label>
-        <input type="number" id="quantity" name="quantity" onChange={inputChange} value={quantity}></input>
+        <input type="number" id="quantity" name="quantity" onChange={inputChange} value={form.quantity}></input>
 
         <label>Buy Price:</label>
-        <input type="number" id="buyPrice" name="buyPrice" onChange={inputChange} value={buyPrice}></input>
+        <input type="number" id="buyPrice" name="buyPrice" onChange={inputChange} value={form.buyPrice}></input>
 
         <label>Current Price:</label>
-        <input type="number" id="currentPrice" name="currentPrice" onChange={inputChange} value={currentPrice}></input>
+        <input type="number" id="currentPrice" name="currentPrice" onChange={inputChange} value={form.currentPrice}></input>
 
         <label>Exchange:</label>
-        <input type="text" id="exchange" name="exchange" onChange={inputChange} value={exchange}></input>
+        <input type="text" id="exchange" name="exchange" onChange={inputChange} value={form.exchange}></input>
 
         <label>Currency:</label>
-        <input type="text" id="currency" name="currency" onChange={inputChange} value={currency}></input>
+        <input type="text" id="currency" name="currency" onChange={inputChange} value={form.currency}></input>
 
         <button type="submit">Add Position</button>
     </form>

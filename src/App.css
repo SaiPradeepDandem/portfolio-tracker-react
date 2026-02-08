@@ -27,3 +27,11 @@
   font-size: 36px;
   color: #666;
  }
+ 
+ .totals-container label.profit {
+  color: rgba(50, 124, 0, 0.842);
+}
+
+ .totals-container label.loss {
+  color: rgba(248, 0, 0, 0.842);
+}

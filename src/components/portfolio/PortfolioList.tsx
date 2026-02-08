@@ -4,7 +4,7 @@ import PortfolioItem from './PortfolioItem'
 
 const PortfolioList = (props: {
     rows: Position[],
-    removePosition: (positionId: string) => void
+    removePosition: (positionId: number) => void
 }) => {
     const rows = props.rows
     console.log("Rows ", rows)

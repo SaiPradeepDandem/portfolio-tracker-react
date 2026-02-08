@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 const PortfolioItem = (props: {
     position: Position,
-    removePosition: (positionId: string) => void
+    removePosition: (positionId: number) => void
 }) => {
 
     const position = props.position
@@ -23,7 +23,7 @@ const PortfolioItem = (props: {
         <td className={totalStyle}>${total.toFixed(2)}</td>
         <td >{position.exchange}</td>
         <td >{position.currency}</td>
-        <td ><input type='button' value="D" onClick={onRemovePosition} /></td>
+        <td ><input type='button' className='delete-btn' value="X" onClick={onRemovePosition} /></td>
     </tr>)
 }
 
