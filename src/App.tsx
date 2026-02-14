@@ -47,6 +47,9 @@ function App() {
     }
   ]
 
+  const [totalCurrentValue, setTotalCurrentValue] = useState(0)
+  const [totalProfitLoss, setTotalProfitLoss] = useState(0)
+  const totalStyle = totalProfitLoss < 0 ? 'loss' : 'profit';
   const [positions, setPositions] = useState<Position[]>(() => {
     const lPositions = localStorage.getItem("positions");
 
@@ -58,7 +61,7 @@ function App() {
     const parsed = JSON.parse(lPositions);
     return parsed.length === 0 ? defaultPositions : parsed;
   });
-  console.log("OnRender -> Positions : ", positions)
+  const [positionToEdit, setPositionToEdit] = useState<Position | null>(null);
 
   const addPosition = (position: Position) => {
     position.id = id_incr++
@@ -67,15 +70,35 @@ function App() {
     setPositions(newPositions)
   }
 
+  const updatePosition = (position: Position) => {
+    let updatedPositions = positions.map(p => {
+      if(p.id === position.id){
+        return position
+      }else{
+        return p
+      }
+    })
+    console.log("Updated Positions : ", updatedPositions)
+    setPositions(updatedPositions)
+  }
+
+  const editPosition = (positionId: number) => {
+    console.log("Edit position id : ", positionId)
+    const position = positions.find(p => p.id === positionId) ?? null;
+    console.log("Position to edit : ", position)
+    setPositionToEdit(position)
+  }
+
   const removePosition = (positionId: number) => {
     console.log("Remove position id : ", positionId)
     const newPositions = positions.filter(p => p.id != positionId);
     setPositions(newPositions)
   }
 
-  const [totalCurrentValue, setTotalCurrentValue] = useState(0)
-  const [totalProfitLoss, setTotalProfitLoss] = useState(0)
-  const totalStyle = totalProfitLoss < 0 ? 'loss' : 'profit';
+  const clearEdit = () => {
+    console.log("Clearning the form...")
+    setPositionToEdit(null)
+  }
 
   useEffect(() => {
     console.log("Use-effect of Positions : ", positions)
@@ -93,8 +116,8 @@ function App() {
     <div className="app-root">
       <Header />
       <div className="app-content">
-        <PositionForm addPosition={addPosition} />
-        <PortfolioList rows={positions} removePosition={removePosition} />
+        <PositionForm addPosition={addPosition} updatePosition={updatePosition} positionToEdit={positionToEdit} clearEdit={clearEdit}/>
+        <PortfolioList rows={positions} removePosition={removePosition} editPosition={editPosition} />
         <div className='totals-container'>
           <label>Total Current Value: </label><label>${totalCurrentValue.toFixed(2)}</label><br />
           <label>Total profit/loss: </label><label className={totalStyle}>${totalProfitLoss.toFixed(2)}</label>

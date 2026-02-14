@@ -4,7 +4,8 @@ import { useState } from 'react'
 
 const PortfolioItem = (props: {
     position: Position,
-    removePosition: (positionId: number) => void
+    removePosition: (positionId: number) => void,
+    editPosition: (positionId: number) => void
 }) => {
 
     const position = props.position
@@ -13,6 +14,11 @@ const PortfolioItem = (props: {
     const onRemovePosition = (event: any) => {
         event.preventDefault()
         props.removePosition(position.id)
+    }
+
+    const onEditPosition = (event: any) => {
+        event.preventDefault()
+        props.editPosition(position.id)
     }
 
     return (<tr>
@@ -24,6 +30,7 @@ const PortfolioItem = (props: {
         <td >{position.exchange}</td>
         <td >{position.currency}</td>
         <td ><input type='button' className='delete-btn' value="X" onClick={onRemovePosition} /></td>
+        <td ><input type='button' className='edit-btn' value="E" onClick={onEditPosition} /></td>
     </tr>)
 }
 

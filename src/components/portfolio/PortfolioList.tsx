@@ -4,7 +4,8 @@ import PortfolioItem from './PortfolioItem'
 
 const PortfolioList = (props: {
     rows: Position[],
-    removePosition: (positionId: number) => void
+    removePosition: (positionId: number) => void,
+    editPosition: (positionId: number) => void
 }) => {
     const rows = props.rows
     console.log("Rows ", rows)
@@ -19,10 +20,11 @@ const PortfolioList = (props: {
                 <th>Exchange</th>
                 <th>Currency</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            {rows.map(row => <PortfolioItem key={row.id} position={row} removePosition={props.removePosition} />)}
+            {rows.map(row => <PortfolioItem key={row.id} position={row} removePosition={props.removePosition} editPosition={props.editPosition} />)}
         </tbody>
     </table>)
 }

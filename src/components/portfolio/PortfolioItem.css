@@ -1,17 +1,36 @@
 .delete-btn {
-    background-color: #f44336; 
+    background-color: #f44336;
     color: white;
     border: none;
     padding: 10px 15px;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
+    display: flex;
+    align-items: center;
+    gap: 8px;
     transition: background-color 0.3s;
 }
 
 .delete-btn:hover {
-    background-color: #d32f2f; 
+    background-color: #d32f2f;
+}
+
+.edit-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s;
+}
+
+/* Style for when the user hovers over the button */
+.edit-btn:hover {
+    background-color: #45a049;
 }

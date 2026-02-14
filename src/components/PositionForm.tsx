@@ -3,7 +3,10 @@ import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { type Position } from './../types/Position'
 
 const PositionForm = (props: {
-    addPosition: (position: Position) => void
+    addPosition: (position: Position) => void,
+    updatePosition: (position: Position) => void,
+    positionToEdit: (Position | null),
+    clearEdit: () => void    
 }) => {
     const [form, setForm] = useState({
         ticker: '',
