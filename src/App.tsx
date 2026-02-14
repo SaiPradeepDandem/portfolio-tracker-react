@@ -54,13 +54,13 @@ function App() {
     position.id = id_incr++
     let newPositions = positions.concat(position)
     console.log("New Positions : ", position)
-    setPositions(newPositions)
+    updatePositions(newPositions)
   }
 
   const removePosition = (positionId: number) => {
     console.log("Remove position id : ", positionId)
     const newPositions = positions.filter(p => p.id != positionId);
-    setPositions(newPositions)
+    updatePositions(newPositions)
   }
 
   const [totalCurrentValue, setTotalCurrentValue] = useState(0)
@@ -71,8 +71,9 @@ function App() {
   useEffect(() => {
     const lPositions = localStorage.getItem("positions")
     if (lPositions === null || JSON.parse(lPositions).length === 0) {
-      setPositions(positions.concat(defaultPositions))
-      localStorage.setItem("positions", JSON.stringify(positions))
+      updatePositions(positions.concat(defaultPositions))
+    }else{
+      updatePositions(JSON.parse(lPositions))
     }
   }, [])
 
@@ -83,6 +84,12 @@ function App() {
     const totalPL = positions.reduce((acc, p) => acc + ((p.currentPrice - p.buyPrice) * p.quantity), 0)
     setTotalProfitLoss(totalPL)
   }, [positions])
+
+  /* Common method to set and update the positions in local. */
+  const updatePositions = (newPositions: Position[]) => {
+    setPositions(newPositions)
+    localStorage.setItem("positions", JSON.stringify(newPositions))
+  }
 
   return (
     <div className="app-root">
