@@ -8,7 +8,7 @@ import { type Position } from './types/Position'
 let id_incr = 5;
 
 function App() {
-  const [positions, setPositions] = useState<Position[]>([
+  const defaultPositions = [
     {
       id: 1,
       ticker: "WDS",
@@ -45,7 +45,9 @@ function App() {
       exchange: "NYSE",
       currency: "USD",
     }
-  ]);
+  ]
+
+  const [positions, setPositions] = useState<Position[]>([]);
   console.log("Initial Positions : ", positions)
 
   const addPosition = (position: Position) => {
@@ -64,6 +66,15 @@ function App() {
   const [totalCurrentValue, setTotalCurrentValue] = useState(0)
   const [totalProfitLoss, setTotalProfitLoss] = useState(0)
   const totalStyle = totalProfitLoss < 0 ? 'loss' : 'profit';
+
+  /* An effect to set positions in storage if does not already exist. */
+  useEffect(() => {
+    const lPositions = localStorage.getItem("positions")
+    if (lPositions === null || JSON.parse(lPositions).length === 0) {
+      setPositions(positions.concat(defaultPositions))
+      localStorage.setItem("positions", JSON.stringify(positions))
+    }
+  }, [])
 
   useEffect(() => {
     const totalCV = positions.reduce((acc, p) => acc + p.currentPrice, 0)
