@@ -47,49 +47,47 @@ function App() {
     }
   ]
 
-  const [positions, setPositions] = useState<Position[]>([]);
-  console.log("Initial Positions : ", positions)
+  const [positions, setPositions] = useState<Position[]>(() => {
+    const lPositions = localStorage.getItem("positions");
+
+    if (!lPositions) {
+      localStorage.setItem("positions", JSON.stringify(defaultPositions));
+      return defaultPositions;
+    }
+
+    const parsed = JSON.parse(lPositions);
+    return parsed.length === 0 ? defaultPositions : parsed;
+  });
+  console.log("OnRender -> Positions : ", positions)
 
   const addPosition = (position: Position) => {
     position.id = id_incr++
     let newPositions = positions.concat(position)
     console.log("New Positions : ", position)
-    updatePositions(newPositions)
+    setPositions(newPositions)
   }
 
   const removePosition = (positionId: number) => {
     console.log("Remove position id : ", positionId)
     const newPositions = positions.filter(p => p.id != positionId);
-    updatePositions(newPositions)
+    setPositions(newPositions)
   }
 
   const [totalCurrentValue, setTotalCurrentValue] = useState(0)
   const [totalProfitLoss, setTotalProfitLoss] = useState(0)
   const totalStyle = totalProfitLoss < 0 ? 'loss' : 'profit';
 
-  /* An effect to set positions in storage if does not already exist. */
   useEffect(() => {
-    const lPositions = localStorage.getItem("positions")
-    if (lPositions === null || JSON.parse(lPositions).length === 0) {
-      updatePositions(positions.concat(defaultPositions))
-    }else{
-      updatePositions(JSON.parse(lPositions))
-    }
-  }, [])
+    console.log("Use-effect of Positions : ", positions)
+    localStorage.setItem('positions', JSON.stringify(positions))
 
-  useEffect(() => {
     const totalCV = positions.reduce((acc, p) => acc + p.currentPrice, 0)
     setTotalCurrentValue(totalCV)
 
     const totalPL = positions.reduce((acc, p) => acc + ((p.currentPrice - p.buyPrice) * p.quantity), 0)
     setTotalProfitLoss(totalPL)
-  }, [positions])
 
-  /* Common method to set and update the positions in local. */
-  const updatePositions = (newPositions: Position[]) => {
-    setPositions(newPositions)
-    localStorage.setItem("positions", JSON.stringify(newPositions))
-  }
+  }, [positions])
 
   return (
     <div className="app-root">
