@@ -80,6 +80,7 @@ function App() {
     })
     console.log("Updated Positions : ", updatedPositions)
     setPositions(updatedPositions)
+    setPositionToEdit(null)
   }
 
   const editPosition = (positionId: number) => {

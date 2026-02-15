@@ -34,3 +34,11 @@
 .form-grid-container button:hover {
     background-color:#049c64;
 }
+
+.form-grid-container .cancel-btn {
+    background-color: #e60127;
+}
+
+.form-grid-container .cancel-btn:hover {
+    background-color:#ce0123;
+}
