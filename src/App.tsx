@@ -141,7 +141,7 @@ function App() {
     console.log("Use-effect of Positions : ", positions)
     localStorage.setItem('positions', JSON.stringify(positions))
 
-    const totalCV = positions.reduce((acc, p) => acc + p.currentPrice, 0)
+    const totalCV = positions.reduce((acc, p) => acc + (p.currentPrice * p.quantity), 0)
     setTotalCurrentValue(totalCV)
 
     const totalPL = positions.reduce((acc, p) => acc + ((p.currentPrice - p.buyPrice) * p.quantity), 0)
