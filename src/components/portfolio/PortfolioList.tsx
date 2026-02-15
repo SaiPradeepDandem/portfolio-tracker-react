@@ -2,23 +2,51 @@ import './PortfolioList.css'
 import { type Position } from '../../types/Position'
 import PortfolioItem from './PortfolioItem'
 
+type SortDirection = 'asc' | 'desc';
+let direction: SortDirection = 'asc'
+let sortKey = ''
+let sortTH = ''
+
 const PortfolioList = (props: {
     rows: Position[],
     removePosition: (positionId: number) => void,
-    editPosition: (positionId: number) => void
+    editPosition: (positionId: number) => void,
+    handleSort: (key: string, direction: string) => void
 }) => {
     const rows = props.rows
     console.log("Rows ", rows)
+
+    const doSort = (key: string, thId: string) => {
+        if (sortKey === key) {
+            direction = direction === 'asc' ? 'desc' : 'asc'
+        }
+        if (sortTH !== '') {
+            let elem = document.getElementById(sortTH);
+            if (elem !== null) {
+                elem.classList.remove("asc")
+                elem.classList.remove("desc")
+            }
+        }
+        sortKey = key
+
+        let elem = document.getElementById(thId);
+        if (elem !== null) {
+            elem.classList.add(direction)
+        }
+        sortTH = thId;
+
+        props.handleSort(key, direction)
+    }
     return (<table className='portfolio-table'>
         <thead>
             <tr>
-                <th>Ticker</th>
-                <th>Quantity</th>
-                <th>Buy Price</th>
-                <th>Current Price</th>
-                <th>Profit/Loss</th>
-                <th>Exchange</th>
-                <th>Currency</th>
+                <th id="tickerTH" onClick={() => doSort('ticker','tickerTH')}>Ticker</th>
+                <th id="quantityTH" onClick={() => doSort('quantity','quantityTH')}>Quantity</th>
+                <th id="buyPriceTH" onClick={() => doSort('buyPrice','buyPriceTH')}>Buy Price</th>
+                <th id="currentPriceTH" onClick={() => doSort('currentPrice','currentPriceTH')}>Current Price</th>
+                <th id="profitOrLossTH" onClick={() => doSort('profitOrLoss','profitOrLossTH')}>Profit/Loss</th>
+                <th id="exchangeTH" onClick={() => doSort('exchange','exchangeTH')}>Exchange</th>
+                <th id="currencyTH" onClick={() => doSort('currency','currencyTH')}>Currency</th>
                 <th></th>
                 <th></th>
             </tr>

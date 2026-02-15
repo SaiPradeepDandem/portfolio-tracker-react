@@ -72,9 +72,9 @@ function App() {
 
   const updatePosition = (position: Position) => {
     let updatedPositions = positions.map(p => {
-      if(p.id === position.id){
+      if (p.id === position.id) {
         return position
-      }else{
+      } else {
         return p
       }
     })
@@ -101,6 +101,42 @@ function App() {
     setPositionToEdit(null)
   }
 
+  const handleSort = (key: string, direction: string) => {
+    console.log("Sort key " + key + ", direction :" + direction)
+    const sortedPositions = [...positions].sort(sortByField(key, direction))
+    setPositions(sortedPositions)
+  }
+
+  const totalOrLoss = (position:Position) => (position.currentPrice - position.buyPrice) * position.quantity
+
+  const sortByField = (field: string, direction: string) => {
+    return (p1: any, p2: any) => {
+      let p1Value:any;
+      let p2Value:any;
+      if (field === 'profitOrLoss') {
+        p1Value = totalOrLoss(p1);
+        p2Value = totalOrLoss(p2);
+      } else {
+        p1Value = p1[field];
+        p2Value = p2[field];
+      }
+
+      if (typeof p1Value === 'string' && typeof p2Value === 'string') {
+        if (direction === 'asc') {
+          return p1Value.localeCompare(p2Value);
+        } else {
+          return p2Value.localeCompare(p1Value);
+        }
+      }
+
+      // Default to numeric or simple comparison if not strings
+      if (direction === 'asc') {
+        return p1Value > p2Value ? 1 : p1Value < p2Value ? -1 : 0;
+      } else {
+        return p2Value > p1Value ? 1 : p2Value < p1Value ? -1 : 0;
+      }
+    };
+  }
   useEffect(() => {
     console.log("Use-effect of Positions : ", positions)
     localStorage.setItem('positions', JSON.stringify(positions))
@@ -117,8 +153,8 @@ function App() {
     <div className="app-root">
       <Header />
       <div className="app-content">
-        <PositionForm addPosition={addPosition} updatePosition={updatePosition} positionToEdit={positionToEdit} clearEdit={clearEdit}/>
-        <PortfolioList rows={positions} removePosition={removePosition} editPosition={editPosition} />
+        <PositionForm addPosition={addPosition} updatePosition={updatePosition} positionToEdit={positionToEdit} clearEdit={clearEdit} />
+        <PortfolioList rows={positions} removePosition={removePosition} editPosition={editPosition} handleSort={handleSort} />
         <div className='totals-container'>
           <label>Total Current Value: </label><label>${totalCurrentValue.toFixed(2)}</label><br />
           <label>Total profit/loss: </label><label className={totalStyle}>${totalProfitLoss.toFixed(2)}</label>

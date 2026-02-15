@@ -104,10 +104,12 @@ const PositionForm = (props: {
         <label>Currency:</label>
         <input type="text" id="currency" name="currency" onChange={inputChange} value={form.currency}></input>
 
-        <button type="submit">{buttonText}</button>
-        {props.positionToEdit !== null && (
-            <button onClick={clearForm} className='cancel-btn'>Cancel</button>
-        )}
+        <div className="button-row">
+            <button type="submit">{buttonText}</button>
+            {props.positionToEdit !== null && (
+                <button onClick={clearForm} className='cancel-btn'>Cancel</button>
+            )}
+        </div>
     </form>
 }
 

@@ -36,3 +36,13 @@
 .portfolio-table td.loss {
   color: rgba(248, 0, 0, 0.842);
 }
+
+th.asc::after {
+  content: '\2193'; 
+  margin-left: 5px;
+}
+
+th.desc::after {
+  content: "\2191";
+  margin-left: 5px;
+}
