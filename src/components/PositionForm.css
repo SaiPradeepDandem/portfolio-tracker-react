@@ -1,3 +1,9 @@
+.form-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .form-grid-container {
     font-size: 16px;
     display: grid;
@@ -7,6 +13,7 @@
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    min-width: 750px; 
 }
 
 .form-grid-container label {
@@ -48,4 +55,22 @@
   display: flex;
   justify-content: center;
   gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .form-grid-container {
+    font-size: 14px;
+    gap: 14px;
+    padding: 14px;
+  }
+
+  .form-grid-container input {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .form-grid-container button {
+    width: 160px;
+    padding: 10px 16px;
+  }
 }

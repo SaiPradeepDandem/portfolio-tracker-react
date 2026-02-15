@@ -85,32 +85,34 @@ const PositionForm = (props: {
 
     }, [props.positionToEdit])
 
-    return <form className="form-grid-container" onSubmit={onAddPosition}>
-        <label>Ticker:</label>
-        <input type="text" id="ticker" name="ticker" onChange={inputChange} value={form.ticker}></input>
+    return <div className="form-wrapper">
+        <form className="form-grid-container" onSubmit={onAddPosition}>
+            <label>Ticker:</label>
+            <input type="text" id="ticker" name="ticker" onChange={inputChange} value={form.ticker}></input>
 
-        <label>Quantity:</label>
-        <input type="number" id="quantity" name="quantity" onChange={inputChange} value={form.quantity}></input>
+            <label>Quantity:</label>
+            <input type="number" id="quantity" name="quantity" onChange={inputChange} value={form.quantity}></input>
 
-        <label>Buy Price:</label>
-        <input type="number" id="buyPrice" name="buyPrice" onChange={inputChange} value={form.buyPrice}></input>
+            <label>Buy Price:</label>
+            <input type="number" id="buyPrice" name="buyPrice" onChange={inputChange} value={form.buyPrice}></input>
 
-        <label>Current Price:</label>
-        <input type="number" id="currentPrice" name="currentPrice" onChange={inputChange} value={form.currentPrice}></input>
+            <label>Current Price:</label>
+            <input type="number" id="currentPrice" name="currentPrice" onChange={inputChange} value={form.currentPrice}></input>
 
-        <label>Exchange:</label>
-        <input type="text" id="exchange" name="exchange" onChange={inputChange} value={form.exchange}></input>
+            <label>Exchange:</label>
+            <input type="text" id="exchange" name="exchange" onChange={inputChange} value={form.exchange}></input>
 
-        <label>Currency:</label>
-        <input type="text" id="currency" name="currency" onChange={inputChange} value={form.currency}></input>
+            <label>Currency:</label>
+            <input type="text" id="currency" name="currency" onChange={inputChange} value={form.currency}></input>
 
-        <div className="button-row">
-            <button type="submit">{buttonText}</button>
-            {props.positionToEdit !== null && (
-                <button onClick={clearForm} className='cancel-btn'>Cancel</button>
-            )}
-        </div>
-    </form>
+            <div className="button-row">
+                <button type="submit">{buttonText}</button>
+                {props.positionToEdit !== null && (
+                    <button onClick={clearForm} className='cancel-btn'>Cancel</button>
+                )}
+            </div>
+        </form>
+    </div>
 }
 
 export default PositionForm

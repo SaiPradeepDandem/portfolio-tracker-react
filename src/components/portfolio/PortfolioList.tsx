@@ -37,24 +37,26 @@ const PortfolioList = (props: {
 
         props.handleSort(key, direction)
     }
-    return (<table className='portfolio-table'>
-        <thead>
-            <tr>
-                <th id="tickerTH" onClick={() => doSort('ticker','tickerTH')}>Ticker</th>
-                <th id="quantityTH" onClick={() => doSort('quantity','quantityTH')}>Quantity</th>
-                <th id="buyPriceTH" onClick={() => doSort('buyPrice','buyPriceTH')}>Buy Price</th>
-                <th id="currentPriceTH" onClick={() => doSort('currentPrice','currentPriceTH')}>Current Price</th>
-                <th id="profitOrLossTH" onClick={() => doSort('profitOrLoss','profitOrLossTH')}>Profit/Loss</th>
-                <th id="exchangeTH" onClick={() => doSort('exchange','exchangeTH')}>Exchange</th>
-                <th id="currencyTH" onClick={() => doSort('currency','currencyTH')}>Currency</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {rows.map(row => <PortfolioItem key={row.id} position={row} removePosition={props.removePosition} editPosition={props.editPosition} />)}
-        </tbody>
-    </table>)
+    return (<div className="table-wrapper">
+        <table className='portfolio-table'>
+            <thead>
+                <tr>
+                    <th id="tickerTH" onClick={() => doSort('ticker', 'tickerTH')}>Ticker</th>
+                    <th id="quantityTH" onClick={() => doSort('quantity', 'quantityTH')}>Quantity</th>
+                    <th id="buyPriceTH" onClick={() => doSort('buyPrice', 'buyPriceTH')}>Buy Price</th>
+                    <th id="currentPriceTH" onClick={() => doSort('currentPrice', 'currentPriceTH')}>Current Price</th>
+                    <th id="profitOrLossTH" onClick={() => doSort('profitOrLoss', 'profitOrLossTH')}>Profit/Loss</th>
+                    <th id="exchangeTH" onClick={() => doSort('exchange', 'exchangeTH')}>Exchange</th>
+                    <th id="currencyTH" onClick={() => doSort('currency', 'currencyTH')}>Currency</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {rows.map(row => <PortfolioItem key={row.id} position={row} removePosition={props.removePosition} editPosition={props.editPosition} />)}
+            </tbody>
+        </table>
+    </div>)
 }
 
 export default PortfolioList
