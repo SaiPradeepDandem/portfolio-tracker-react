@@ -8,78 +8,150 @@ import { type Position } from './types/Position'
 let id_incr = 5;
 
 function App() {
-  const defaultPositions = [
-    {
-      id: 1,
-      ticker: "WDS",
-      quantity: 20,
-      buyPrice: 26.01,
-      currentPrice: 24.36,
-      exchange: "ASX",
-      currency: "AUD",
-    },
-    {
-      id: 2,
-      ticker: "TLS",
-      quantity: 200,
-      buyPrice: 1.04,
-      currentPrice: 1.56,
-      exchange: "ASX",
-      currency: "AUD",
-    },
-    {
-      id: 3,
-      ticker: "VGA",
-      quantity: 10,
-      buyPrice: 226.55,
-      currentPrice: 226.90,
-      exchange: "ASX",
-      currency: "AUD",
-    },
-    {
-      id: 4,
-      ticker: "NVO",
-      quantity: 44,
-      buyPrice: 85.01,
-      currentPrice: 80.25,
-      exchange: "NYSE",
-      currency: "USD",
+  const baseUrl = "https://portfolio-tracker-server-r6bq.onrender.com/api/positions"
+  // const defaultPositions = [
+  //   {
+  //     id: 1,
+  //     ticker: "WDS",
+  //     quantity: 20,
+  //     buyPrice: 26.01,
+  //     currentPrice: 24.36,
+  //     exchange: "ASX",
+  //     currency: "AUD",
+  //   },
+  //   {
+  //     id: 2,
+  //     ticker: "TLS",
+  //     quantity: 200,
+  //     buyPrice: 1.04,
+  //     currentPrice: 1.56,
+  //     exchange: "ASX",
+  //     currency: "AUD",
+  //   },
+  //   {
+  //     id: 3,
+  //     ticker: "VGA",
+  //     quantity: 10,
+  //     buyPrice: 226.55,
+  //     currentPrice: 226.90,
+  //     exchange: "ASX",
+  //     currency: "AUD",
+  //   },
+  //   {
+  //     id: 4,
+  //     ticker: "NVO",
+  //     quantity: 44,
+  //     buyPrice: 85.01,
+  //     currentPrice: 80.25,
+  //     exchange: "NYSE",
+  //     currency: "USD",
+  //   }
+  // ]
+
+  const loadPositionsFromServer = async () => {
+    try {
+      const response = await fetch(baseUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error ${response.status}`);
+      }
+      const data: Position[] = await response.json();
+      setPositions(data);
+    } catch (err) {
+      console.error("Failed to load positions from API:", err);
     }
-  ]
+  };
 
   const [totalCurrentValue, setTotalCurrentValue] = useState(0)
   const [totalProfitLoss, setTotalProfitLoss] = useState(0)
   const totalStyle = totalProfitLoss < 0 ? 'loss' : 'profit';
-  const [positions, setPositions] = useState<Position[]>(() => {
-    const lPositions = localStorage.getItem("positions");
+  // const [positions, setPositions] = useState<Position[]>(() => {
+  //   const lPositions = localStorage.getItem("positions");
 
-    if (!lPositions) {
-      localStorage.setItem("positions", JSON.stringify(defaultPositions));
-      return defaultPositions;
-    }
+  //   if (!lPositions) {
+  //     localStorage.setItem("positions", JSON.stringify(defaultPositions));
+  //     return defaultPositions;
+  //   }
 
-    const parsed = JSON.parse(lPositions);
-    return parsed.length === 0 ? defaultPositions : parsed;
-  });
+  //   const parsed = JSON.parse(lPositions);
+  //   return parsed.length === 0 ? defaultPositions : parsed;
+  // });
+  const [positions, setPositions] = useState<Position[]>([])
+
   const [positionToEdit, setPositionToEdit] = useState<Position | null>(null);
 
-  const addPosition = (position: Position) => {
-    position.id = id_incr++
-    let newPositions = positions.concat(position)
-    console.log("New Positions : ", position)
-    setPositions(newPositions)
+  // const addPosition = (position: Position) => {
+  //   position.id = id_incr++
+  //   let newPositions = positions.concat(position)
+  //   console.log("New Positions : ", position)
+  //   setPositions(newPositions)
+  // }
+
+  const addPosition = async (position: Position) => {
+    try {
+      const response = await fetch(baseUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ticker: position.ticker,
+          quantity: position.quantity,
+          buyPrice: position.buyPrice,
+          currentPrice: position.currentPrice,
+          exchange: position.exchange,
+          currency: position.currency,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to add position (${response.status})`);
+      }
+
+      loadPositionsFromServer();
+    } catch (error) {
+      console.error("Error adding position:", error);
+    }
   }
 
-  const updatePosition = (position: Position) => {
-    let updatedPositions = positions.map(p => {
-      if (p.id === position.id) {
-        return position
-      } else {
-        return p
+  // const updatePosition = (position: Position) => {
+  //   let updatedPositions = positions.map(p => {
+  //     if (p.id === position.id) {
+  //       return position
+  //     } else {
+  //       return p
+  //     }
+  //   })
+  //   console.log("Updated Positions : ", updatedPositions)
+  //   setPositions(updatedPositions)
+  //   setPositionToEdit(null)
+  // }
+
+  const updatePosition = async (position: Position) => {
+    try {
+      const u = baseUrl+"/"+position.id
+      const response = await fetch(u, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ticker: position.ticker,
+          quantity: position.quantity,
+          buyPrice: position.buyPrice,
+          currentPrice: position.currentPrice,
+          exchange: position.exchange,
+          currency: position.currency,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to update position (${response.status})`);
       }
-    })
-    console.log("Updated Positions : ", updatedPositions)
-    setPositions(updatedPositions)
+
+      loadPositionsFromServer();
+    } catch (error) {
+      console.error("Error adding position:", error);
+    }
     setPositionToEdit(null)
   }
 
@@ -90,10 +162,28 @@ function App() {
     setPositionToEdit(position)
   }
 
-  const removePosition = (positionId: number) => {
+  // const removePosition = (positionId: number) => {
+  //   console.log("Remove position id : ", positionId)
+  //   const newPositions = positions.filter(p => p.id != positionId);
+  //   setPositions(newPositions)
+  // }
+
+  const removePosition = async (positionId: number) => {
     console.log("Remove position id : ", positionId)
-    const newPositions = positions.filter(p => p.id != positionId);
-    setPositions(newPositions)
+    try {
+      const u = baseUrl+"/"+positionId
+      const response = await fetch(u, {
+        method: "DELETE"
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete position (${response.status})`);
+      }
+
+      loadPositionsFromServer();
+    } catch (error) {
+      console.error("Error deleting position:", error);
+    }
   }
 
   const clearEdit = () => {
@@ -107,12 +197,12 @@ function App() {
     setPositions(sortedPositions)
   }
 
-  const totalOrLoss = (position:Position) => (position.currentPrice - position.buyPrice) * position.quantity
+  const totalOrLoss = (position: Position) => (position.currentPrice - position.buyPrice) * position.quantity
 
   const sortByField = (field: string, direction: string) => {
     return (p1: any, p2: any) => {
-      let p1Value:any;
-      let p2Value:any;
+      let p1Value: any;
+      let p2Value: any;
       if (field === 'profitOrLoss') {
         p1Value = totalOrLoss(p1);
         p2Value = totalOrLoss(p2);
@@ -139,7 +229,7 @@ function App() {
   }
   useEffect(() => {
     console.log("Use-effect of Positions : ", positions)
-    localStorage.setItem('positions', JSON.stringify(positions))
+    //localStorage.setItem('positions', JSON.stringify(positions))
 
     const totalCV = positions.reduce((acc, p) => acc + (p.currentPrice * p.quantity), 0)
     setTotalCurrentValue(totalCV)
@@ -148,6 +238,10 @@ function App() {
     setTotalProfitLoss(totalPL)
 
   }, [positions])
+
+  useEffect(() => {
+    loadPositionsFromServer();
+  }, []);
 
   return (
     <div className="app-root">
