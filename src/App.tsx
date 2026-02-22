@@ -5,7 +5,7 @@ import PortfolioList from './components/portfolio/PortfolioList'
 import PositionForm from './components/PositionForm'
 import { type Position } from './types/Position'
 
-let id_incr = 5;
+//let id_incr = 5;
 
 function App() {
   const baseUrl = "https://portfolio-tracker-server-r6bq.onrender.com/api/positions"
