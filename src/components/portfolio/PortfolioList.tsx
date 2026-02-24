@@ -12,6 +12,7 @@ const PortfolioList = (props: {
     removePosition: (positionId: number) => void,
     editPosition: (positionId: number) => void,
     handleSort: (key: string, direction: string) => void
+    loading: boolean
 }) => {
     const rows = props.rows
     console.log("Rows ", rows)
@@ -38,6 +39,11 @@ const PortfolioList = (props: {
         props.handleSort(key, direction)
     }
     return (<div className="table-wrapper">
+        {props.loading && (
+            <div className="table-mask">
+                <div className="loader">Loading positions…</div>
+            </div>
+        )}
         <table className='portfolio-table'>
             <thead>
                 <tr>
