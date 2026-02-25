@@ -6,6 +6,9 @@ import PositionForm from './components/PositionForm'
 import { type Position } from './types/Position'
 import { usePositions } from './hooks/usePositions'
 
+let sortKey: string
+let sortDirection: string;
+
 function App() {
   const {
     positions,
@@ -20,6 +23,7 @@ function App() {
   const [totalProfitLoss, setTotalProfitLoss] = useState(0)
   const totalStyle = totalProfitLoss < 0 ? 'loss' : 'profit';
   const [positionToEdit, setPositionToEdit] = useState<Position | null>(null);
+  const [localPositions, setLocalPositions] = useState<Position[]>([]);
 
   const editPosition = (positionId: number) => {
     console.log("Edit position id : ", positionId)
@@ -35,9 +39,9 @@ function App() {
 
   const handleSort = (key: string, direction: string) => {
     console.log("Sort key " + key + ", direction :" + direction)
-    const sortedPositions = [...positions].sort(sortByField(key, direction))
-    console.log(sortedPositions)
-    //setPositions(sortedPositions)
+    sortKey = key
+    sortDirection = direction
+    updateLocalPositions()
   }
 
   const totalOrLoss = (position: Position) => (position.currentPrice - position.buyPrice) * position.quantity
@@ -70,7 +74,18 @@ function App() {
       }
     };
   }
+
+  const updateLocalPositions = () => {
+    let sortedPositions = [...positions]
+    if (sortKey) {
+      sortedPositions = sortedPositions.sort(sortByField(sortKey, sortDirection))
+    }
+    setLocalPositions(sortedPositions)
+  }
+
   useEffect(() => {
+    updateLocalPositions()
+
     const totalCV = positions.reduce((acc, p) => acc + (p.currentPrice * p.quantity), 0)
     setTotalCurrentValue(totalCV)
 
@@ -84,11 +99,11 @@ function App() {
       <div className="app-content">
         <PositionForm addPosition={addPosition} updatePosition={updatePosition} positionToEdit={positionToEdit} clearEdit={clearEdit} />
         {error && (
-            <div className="error-div">
-                <div>{error}</div>
-            </div>
+          <div className="error-div">
+            <div>{error}</div>
+          </div>
         )}
-        <PortfolioList rows={positions} removePosition={deletePosition} editPosition={editPosition} handleSort={handleSort} loading={loading} />
+        <PortfolioList rows={localPositions} removePosition={deletePosition} editPosition={editPosition} handleSort={handleSort} loading={loading} />
         <div className='totals-container'>
           <label>Total Current Value: </label><label>${totalCurrentValue.toFixed(2)}</label><br />
           <label>Total profit/loss: </label><label className={totalStyle}>${totalProfitLoss.toFixed(2)}</label>
