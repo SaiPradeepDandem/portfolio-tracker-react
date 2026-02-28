@@ -84,6 +84,10 @@ function App() {
     setLocalPositions(sortedPositions)
   }
 
+  const updatePositionToServer = (position: Position) => {
+    updatePosition(position)
+    clearEdit()
+  }
   useEffect(() => {
     updateLocalPositions()
 
@@ -98,7 +102,7 @@ function App() {
     <div className="app-root">
       <Header />
       <div className="app-content">
-        <PositionForm addPosition={addPosition} updatePosition={updatePosition} positionToEdit={positionToEdit} clearEdit={clearEdit} />
+        <PositionForm addPosition={addPosition} updatePosition={updatePositionToServer} positionToEdit={positionToEdit} clearEdit={clearEdit} />
         {error && (
           <div className="error-div">
             <div>{error}</div>

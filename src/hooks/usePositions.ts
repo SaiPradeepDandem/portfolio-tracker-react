@@ -27,17 +27,32 @@ export const usePositions = () => {
     }, [loadPositions]);
 
     const add = async (position: Position) => {
-        await api.addPosition(position);
+        try {
+            await api.addPosition(position);
+        } catch (err) {
+            logger.error(err);
+            setError("Failed to add position : " + err);
+        }
         await loadPositions();
     };
 
     const update = async (position: Position) => {
-        await api.updatePosition(position);
+        try {
+            await api.updatePosition(position);
+        } catch (err) {
+            logger.error(err);
+            setError("Failed to update position : " + err);
+        }
         await loadPositions();
     };
 
     const remove = async (id: number) => {
-        await api.deletePosition(id);
+        try {
+            await api.deletePosition(id);
+        } catch (err) {
+            logger.error(err);
+            setError("Failed to delete position : " + err);
+        }
         await loadPositions();
     };
 

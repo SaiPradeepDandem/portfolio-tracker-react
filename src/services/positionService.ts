@@ -26,6 +26,7 @@ export const addPosition = async (position: Position): Promise<void> => {
         }
     } catch (error) {
         logger.error("Error adding position:", error);
+        throw new Error(`Failed to add position (${error})`);
     }
 }
 
@@ -45,6 +46,7 @@ export const updatePosition = async (position: Position): Promise<void> => {
         }
     } catch (error) {
         logger.error("Error adding position:", error);
+        throw new Error(`Failed to update position (${error})`);
     }
 }
 
@@ -61,6 +63,7 @@ export const deletePosition = async (positionId: number): Promise<void> => {
         }
     } catch (error) {
         logger.error("Error deleting position:", error);
+        throw new Error(`Failed to delete position (${error})`);
     }
 }
 
