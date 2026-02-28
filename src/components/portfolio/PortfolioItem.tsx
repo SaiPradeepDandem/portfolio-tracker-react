@@ -9,7 +9,7 @@ const PortfolioItem = (props: {
 }) => {
 
     const position = props.position
-    const [total] = useState((position.currentPrice - position.buyPrice) * position.quantity)
+    const [total] = useState((position.current_price - position.buy_price) * position.quantity)
     const totalStyle = total < 0 ? 'loss' : 'profit';
     const onRemovePosition = (event: any) => {
         event.preventDefault()
@@ -24,8 +24,8 @@ const PortfolioItem = (props: {
     return (<tr>
         <td >{position.ticker}</td>
         <td >{position.quantity}</td>
-        <td >${position.buyPrice}</td>
-        <td >${position.currentPrice}</td>
+        <td >${position.buy_price}</td>
+        <td >${position.current_price}</td>
         <td className={totalStyle}>${total.toFixed(2)}</td>
         <td >{position.exchange}</td>
         <td >{position.currency}</td>

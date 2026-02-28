@@ -45,7 +45,7 @@ function App() {
     updateLocalPositions()
   }
 
-  const totalOrLoss = (position: Position) => (position.currentPrice - position.buyPrice) * position.quantity
+  const totalOrLoss = (position: Position) => (position.current_price - position.buy_price) * position.quantity
 
   const sortByField = (field: string, direction: string) => {
     return (p1: any, p2: any) => {
@@ -87,10 +87,10 @@ function App() {
   useEffect(() => {
     updateLocalPositions()
 
-    const totalCV = positions.reduce((acc, p) => acc + (p.currentPrice * p.quantity), 0)
+    const totalCV = positions.reduce((acc, p) => acc + (p.current_price * p.quantity), 0)
     setTotalCurrentValue(totalCV)
 
-    const totalPL = positions.reduce((acc, p) => acc + ((p.currentPrice - p.buyPrice) * p.quantity), 0)
+    const totalPL = positions.reduce((acc, p) => acc + ((p.current_price - p.buy_price) * p.quantity), 0)
     setTotalProfitLoss(totalPL)
   }, [positions])
 

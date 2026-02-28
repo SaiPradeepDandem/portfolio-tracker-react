@@ -13,8 +13,8 @@ const PositionForm = (props: {
     const [form, setForm] = useState({
         ticker: '',
         quantity: '',
-        buyPrice: '',
-        currentPrice: '',
+        buy_price: '',
+        current_price: '',
         exchange: '',
         currency: '',
     })
@@ -23,8 +23,8 @@ const PositionForm = (props: {
         setForm({
             ticker: '',
             quantity: '',
-            buyPrice: '',
-            currentPrice: '',
+            buy_price: '',
+            current_price: '',
             exchange: '',
             currency: '',
         })
@@ -37,8 +37,8 @@ const PositionForm = (props: {
             id: props.positionToEdit === null ? 0 : props.positionToEdit.id,
             ticker: form.ticker,
             quantity: Number(form.quantity),
-            buyPrice: Number(form.buyPrice),
-            currentPrice: Number(form.currentPrice),
+            buy_price: Number(form.buy_price),
+            current_price: Number(form.current_price),
             exchange: form.exchange,
             currency: form.currency
         };
@@ -76,8 +76,8 @@ const PositionForm = (props: {
             setForm({
                 ticker: props.positionToEdit.ticker,
                 quantity: props.positionToEdit.quantity + "",
-                buyPrice: props.positionToEdit.buyPrice + "",
-                currentPrice: props.positionToEdit.currentPrice + "",
+                buy_price: props.positionToEdit.buy_price + "",
+                current_price: props.positionToEdit.current_price + "",
                 exchange: props.positionToEdit.exchange,
                 currency: props.positionToEdit.currency,
             })
@@ -95,10 +95,10 @@ const PositionForm = (props: {
             <input type="number" id="quantity" name="quantity" onChange={inputChange} value={form.quantity}></input>
 
             <label>Buy Price:</label>
-            <input type="number" id="buyPrice" name="buyPrice" onChange={inputChange} value={form.buyPrice}></input>
+            <input type="number" id="buy_price" name="buy_price" onChange={inputChange} value={form.buy_price}></input>
 
             <label>Current Price:</label>
-            <input type="number" id="currentPrice" name="currentPrice" onChange={inputChange} value={form.currentPrice}></input>
+            <input type="number" id="current_price" name="current_price" onChange={inputChange} value={form.current_price}></input>
 
             <label>Exchange:</label>
             <input type="text" id="exchange" name="exchange" onChange={inputChange} value={form.exchange}></input>

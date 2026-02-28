@@ -68,8 +68,8 @@ function stringifyPosition(position: Position) {
     return JSON.stringify({
         ticker: position.ticker,
         quantity: position.quantity,
-        buyPrice: position.buyPrice,
-        currentPrice: position.currentPrice,
+        buy_price: position.buy_price,
+        current_price: position.current_price,
         exchange: position.exchange,
         currency: position.currency,
     });

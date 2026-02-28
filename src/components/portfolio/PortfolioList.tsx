@@ -50,8 +50,8 @@ const PortfolioList = (props: {
                 <tr>
                     <th id="tickerTH" onClick={() => doSort('ticker', 'tickerTH')}>Ticker</th>
                     <th id="quantityTH" onClick={() => doSort('quantity', 'quantityTH')}>Quantity</th>
-                    <th id="buyPriceTH" onClick={() => doSort('buyPrice', 'buyPriceTH')}>Buy Price</th>
-                    <th id="currentPriceTH" onClick={() => doSort('currentPrice', 'currentPriceTH')}>Current Price</th>
+                    <th id="buy_priceTH" onClick={() => doSort('buy_price', 'buy_priceTH')}>Buy Price</th>
+                    <th id="current_priceTH" onClick={() => doSort('current_price', 'current_priceTH')}>Current Price</th>
                     <th id="profitOrLossTH" onClick={() => doSort('profitOrLoss', 'profitOrLossTH')}>Profit/Loss</th>
                     <th id="exchangeTH" onClick={() => doSort('exchange', 'exchangeTH')}>Exchange</th>
                     <th id="currencyTH" onClick={() => doSort('currency', 'currencyTH')}>Currency</th>
