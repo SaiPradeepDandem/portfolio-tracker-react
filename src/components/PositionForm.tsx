@@ -1,6 +1,7 @@
 import './PositionForm.css'
 import { useState, useEffect, type ChangeEvent, type FormEvent } from 'react';
 import { type Position } from './../types/Position'
+import { logger } from './../utils/logger'
 
 const PositionForm = (props: {
     addPosition: (position: Position) => void,
@@ -41,7 +42,7 @@ const PositionForm = (props: {
             exchange: form.exchange,
             currency: form.currency
         };
-        console.log("New or updated Position  : ", position)
+        logger.info("New or updated Position  : ", position)
 
         /* Reset the form. */
         resetForm()
@@ -57,7 +58,7 @@ const PositionForm = (props: {
         /* Extracting the attributes directly. */
         let { id, value } = event.target
         setForm(prev => ({ ...prev, [id]: value }))
-        console.log("Form : ", form)
+        logger.info("Form : ", form)
     }
 
     const clearForm = (event: any) => {
@@ -66,7 +67,7 @@ const PositionForm = (props: {
     }
 
     useEffect(() => {
-        console.log("Edit form : ", props.positionToEdit)
+        logger.info("Edit form : ", props.positionToEdit)
         if (props.positionToEdit === null) {
             /* Reset the form. */
             resetForm()

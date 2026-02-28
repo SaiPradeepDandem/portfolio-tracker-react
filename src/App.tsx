@@ -5,9 +5,10 @@ import PortfolioList from './components/portfolio/PortfolioList'
 import PositionForm from './components/PositionForm'
 import { type Position } from './types/Position'
 import { usePositions } from './hooks/usePositions'
-
+import { logger } from './utils/logger'
 let sortKey: string
 let sortDirection: string;
+
 
 function App() {
   const {
@@ -26,19 +27,19 @@ function App() {
   const [localPositions, setLocalPositions] = useState<Position[]>([]);
 
   const editPosition = (positionId: number) => {
-    console.log("Edit position id : ", positionId)
+    logger.info("Edit position id : ", positionId)
     const position = positions.find(p => p.id === positionId) ?? null;
-    console.log("Position to edit : ", position)
+    logger.info("Position to edit : ", position)
     setPositionToEdit(position)
   }
 
   const clearEdit = () => {
-    console.log("Clearning the form...")
+    logger.info("Clearning the form...")
     setPositionToEdit(null)
   }
 
   const handleSort = (key: string, direction: string) => {
-    console.log("Sort key " + key + ", direction :" + direction)
+    logger.info("Sort key " + key + ", direction :" + direction)
     sortKey = key
     sortDirection = direction
     updateLocalPositions()

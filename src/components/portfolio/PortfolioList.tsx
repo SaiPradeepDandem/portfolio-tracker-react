@@ -1,6 +1,7 @@
 import './PortfolioList.css'
 import { type Position } from '../../types/Position'
 import PortfolioItem from './PortfolioItem'
+import { logger } from '../../utils/logger'
 
 type SortDirection = 'asc' | 'desc';
 let direction: SortDirection = 'asc'
@@ -15,7 +16,7 @@ const PortfolioList = (props: {
     loading: boolean
 }) => {
     const rows = props.rows
-    console.log("Rows ", rows)
+    logger.info("Rows ", rows)
 
     const doSort = (key: string, thId: string) => {
         if (sortKey === key) {

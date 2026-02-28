@@ -1,4 +1,5 @@
 import { type Position } from '../types/Position'
+import { logger } from '../utils/logger'
 
 const baseUrl = "https://portfolio-tracker-server-r6bq.onrender.com/api/positions"
 
@@ -24,7 +25,7 @@ export const addPosition = async (position: Position): Promise<void> => {
             throw new Error(`Failed to add position (${response.status})`);
         }
     } catch (error) {
-        console.error("Error adding position:", error);
+        logger.error("Error adding position:", error);
     }
 }
 
@@ -43,12 +44,12 @@ export const updatePosition = async (position: Position): Promise<void> => {
             throw new Error(`Failed to update position (${response.status})`);
         }
     } catch (error) {
-        console.error("Error adding position:", error);
+        logger.error("Error adding position:", error);
     }
 }
 
 export const deletePosition = async (positionId: number): Promise<void> => {
-    console.log("Delete position id : ", positionId)
+    logger.info("Delete position id : ", positionId)
     try {
         const url = baseUrl + "/" + positionId
         const response = await fetch(url, {
@@ -59,7 +60,7 @@ export const deletePosition = async (positionId: number): Promise<void> => {
             throw new Error(`Failed to delete position (${response.status})`);
         }
     } catch (error) {
-        console.error("Error deleting position:", error);
+        logger.error("Error deleting position:", error);
     }
 }
 

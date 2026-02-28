@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { type Position } from "../types/Position";
 import * as api from "../services/positionService";
+import { logger } from '../utils/logger'
 
 export const usePositions = () => {
     const [positions, setPositions] = useState<Position[]>([]);
@@ -14,7 +15,7 @@ export const usePositions = () => {
             setPositions(data);
             localStorage.setItem("positions", JSON.stringify(data));
         } catch (err) {
-            console.error(err);
+            logger.error(err);
             setError("Failed to load positions");
         } finally {
             setLoading(false);
