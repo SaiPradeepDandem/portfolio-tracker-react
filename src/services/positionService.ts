@@ -3,12 +3,12 @@ import { logger } from '../utils/logger'
 
 const baseUrl = "https://portfolio-tracker-server-r6bq.onrender.com/api/positions"
 
-export const getPositions = async ():Promise<Position[]> => {
-        const response = await fetch(baseUrl);
-        if (!response.ok) {
-            throw new Error(`HTTP error ${response.status}`);
-        }
-        return await response.json();
+export const getPositions = async (): Promise<Position[]> => {
+    const response = await fetch(baseUrl);
+    if (!response.ok) {
+        throw new Error(`HTTP error ${response.status}`);
+    }
+    return await response.json();
 };
 
 export const addPosition = async (position: Position): Promise<void> => {
@@ -24,9 +24,14 @@ export const addPosition = async (position: Position): Promise<void> => {
         if (!response.ok) {
             throw new Error(`Failed to add position (${response.status})`);
         }
-    } catch (error) {
+    } catch (error: unknown) {
         logger.error("Error adding position:", error);
-        throw new Error(`Failed to add position (${error})`);
+
+        if (error instanceof Error) {
+            throw new Error(`Failed to add position (${error.message})`);
+        }
+
+        throw new Error("Failed to add position (unknown error)");
     }
 }
 
@@ -44,9 +49,14 @@ export const updatePosition = async (position: Position): Promise<void> => {
         if (!response.ok) {
             throw new Error(`Failed to update position (${response.status})`);
         }
-    } catch (error) {
-        logger.error("Error adding position:", error);
-        throw new Error(`Failed to update position (${error})`);
+    } catch (error: unknown) {
+        logger.error("Error updating position:", error);
+
+        if (error instanceof Error) {
+            throw new Error(`Failed to update position (${error.message})`);
+        }
+
+        throw new Error("Failed to update position (unknown error)");
     }
 }
 
@@ -61,9 +71,14 @@ export const deletePosition = async (positionId: number): Promise<void> => {
         if (!response.ok) {
             throw new Error(`Failed to delete position (${response.status})`);
         }
-    } catch (error) {
+    } catch (error: unknown) {
         logger.error("Error deleting position:", error);
-        throw new Error(`Failed to delete position (${error})`);
+
+        if (error instanceof Error) {
+            throw new Error(`Failed to delete position (${error.message})`);
+        }
+
+        throw new Error("Failed to delete position (unknown error)");
     }
 }
 

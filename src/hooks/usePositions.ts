@@ -13,10 +13,11 @@ export const usePositions = () => {
             setLoading(true);
             const data = await api.getPositions();
             setPositions(data);
-            localStorage.setItem("positions", JSON.stringify(data));
         } catch (err) {
             logger.error(err);
-            setError("Failed to load positions");
+            if (err instanceof Error) {
+                setError(`${err.message}`);
+            }            
         } finally {
             setLoading(false);
         }
@@ -31,7 +32,9 @@ export const usePositions = () => {
             await api.addPosition(position);
         } catch (err) {
             logger.error(err);
-            setError("Failed to add position : " + err);
+            if (err instanceof Error) {
+                setError(`${err.message}`);
+            } 
         }
         await loadPositions();
     };
@@ -41,7 +44,9 @@ export const usePositions = () => {
             await api.updatePosition(position);
         } catch (err) {
             logger.error(err);
-            setError("Failed to update position : " + err);
+            if (err instanceof Error) {
+                setError(`${err.message}`);
+            } 
         }
         await loadPositions();
     };
@@ -51,7 +56,9 @@ export const usePositions = () => {
             await api.deletePosition(id);
         } catch (err) {
             logger.error(err);
-            setError("Failed to delete position : " + err);
+            if (err instanceof Error) {
+                setError(`${err.message}`);
+            } 
         }
         await loadPositions();
     };

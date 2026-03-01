@@ -54,6 +54,13 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.error-div{
+  color: rgba(248, 0, 0, 0.842);
+  background-color: #ffc0c0;
+  border: 1px solid #ff5454;
+  border-radius: 8px;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
