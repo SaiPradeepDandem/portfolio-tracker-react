@@ -1,7 +1,12 @@
 import { type Position } from '../types/Position'
 import { logger } from '../utils/logger'
 
-const baseUrl = "https://portfolio-tracker-server-r6bq.onrender.com/api/positions"
+const isLocalhost =
+  window.location.hostname === "localhost";
+
+const baseUrl = isLocalhost
+  ? "http://localhost:3001/api/positions"
+  : "https://portfolio-tracker-server-r6bq.onrender.com/api/positions"
 
 export const getPositions = async (): Promise<Position[]> => {
     const response = await fetch(baseUrl);
